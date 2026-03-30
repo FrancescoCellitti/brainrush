@@ -49,27 +49,34 @@ public class CategoryController {
     }
 
     @GetMapping("/update/{id}")
-    public String edit(Model model, Integer id) {
+    public String edit(@PathVariable("id") Integer id, Model model) {
         Category category = catService.getById(id);
         model.addAttribute("category", category);
         return "category/update";
     }
 
-    @PostMapping
-    public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("category") Category formCaterogy,
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("category") Category formCategory,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("category", formCaterogy);
+            model.addAttribute("category", formCategory);
             return "category/update";
         }
-        catService.update(id, formCaterogy);
+        catService.update(id, formCategory);
         return "redirect:/category";
 
     }
 
-    @PostMapping
-    public String delete(@PathVariable("id") Integer id, Model model) {
 
+    @GetMapping("/delete/{id}")
+    public String toDelete(@PathVariable("id") Integer id, Model model){
+        Category category = catService.getById(id);
+        model.addAttribute("category", category);
+        return "category/delete";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
         catService.deleteById(id);
         return "redirect:/category";
     }
