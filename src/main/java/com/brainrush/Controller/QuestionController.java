@@ -29,7 +29,7 @@ public class QuestionController {
     public String read(Model model){
         List<Question> questions = questionService.findAll();
         model.addAttribute("question", questions);
-        return "";
+        return "question/index";
     }
 
     @GetMapping("/add")
