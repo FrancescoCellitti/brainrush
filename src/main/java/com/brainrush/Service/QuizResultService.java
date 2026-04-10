@@ -20,11 +20,14 @@ public class QuizResultService {
         return resultRepo.findAll();
     }
 
-    public QuizResult getById(Integer id){
+    public QuizResult getById(int id){
         return resultRepo.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "risposta non trovata"));
     }
 
     public List<QuizResult> getAllById(List<Integer> id){
+         if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "risposta non valida");
+        }
         return resultRepo.findAllById(id);
     }
 

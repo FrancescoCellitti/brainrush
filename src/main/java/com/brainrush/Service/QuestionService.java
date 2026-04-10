@@ -20,11 +20,15 @@ public class QuestionService {
         return questionRepo.findAll();
     }
 
-    public Question getById(Integer id){
-        return questionRepo.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "domanda non trovata"));
+    public Question getById(int id){
+        return questionRepo.findById(id)
+        .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "domanda non trovata"));
     }
 
     public List<Question> getAllById(List<Integer> id){
+        if(id == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "domanada non valida");
+        }
         return questionRepo.findAllById(id);
     }
 
