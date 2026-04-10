@@ -55,6 +55,13 @@ public class CategoryController {
         return "category/update";
     }
 
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Integer id, Model model) {
+        Category category = catService.getById(id);
+        model.addAttribute("category", category);
+        return "category/show";
+    }
+
     @PostMapping("/update/{id}")
     public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("category") Category formCategory,
             BindingResult bindingResult, Model model) {

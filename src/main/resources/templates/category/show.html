@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Categoria</title>
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --primary: #0f766e;
+            --border: #d1d5db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 24px;
+        }
+
+        h1 {
+            margin-bottom: 18px;
+        }
+
+        .row {
+            margin-bottom: 16px;
+        }
+
+        .label {
+            display: block;
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .value {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Dettaglio Categoria</h1>
+
+    <div class="row">
+        <span class="label">ID</span>
+        <p class="value" th:text="${category.id}"></p>
+    </div>
+
+    <div class="row">
+        <span class="label">Nome</span>
+        <p class="value" th:text="${category.name}"></p>
+    </div>
+
+    <div class="row">
+        <span class="label">Descrizione</span>
+        <p class="value" th:text="${category.description}"></p>
+    </div>
+
+    <div class="actions">
+        <a class="btn btn-primary" th:href="@{/category/update/{id}(id=${category.id})}">Modifica</a>
+        <a class="btn btn-secondary" th:href="@{/category}">Torna all'elenco</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elenco Categorie</title>
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --primary: #0f766e;
+            --warning: #b45309;
+            --danger: #b91c1c;
+            --border: #d1d5db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 1px solid var(--border);
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--muted);
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .link {
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .link-show { color: var(--primary); }
+        .link-edit { color: var(--warning); }
+        .link-delete { color: var(--danger); }
+
+        .empty {
+            margin-top: 16px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Categorie</h1>
+        <a class="btn btn-primary" th:href="@{/category/add}">+ Nuova categoria</a>
+    </div>
+
+    <table th:if="${categoria != null and !#lists.isEmpty(categoria)}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrizione</th>
+            <th>Azioni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cat : ${categoria}">
+            <td th:text="${cat.id}"></td>
+            <td th:text="${cat.name}"></td>
+            <td th:text="${cat.description}"></td>
+            <td>
+                <div class="actions">
+                    <a class="link link-show" th:href="@{/category/{id}(id=${cat.id})}">Dettaglio</a>
+                    <a class="link link-edit" th:href="@{/category/update/{id}(id=${cat.id})}">Modifica</a>
+                    <a class="link link-delete" th:href="@{/category/delete/{id}(id=${cat.id})}">Elimina</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p class="empty" th:if="${categoria == null or #lists.isEmpty(categoria)}">Nessuna categoria presente.</p>
+</div>
+</body>
+</html>
