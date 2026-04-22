@@ -1,5 +1,7 @@
 package com.brainrush.model;
 
+import java.time.Instant;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,11 +30,11 @@ public class QuizResult {
     private Integer totalQuestions;
 
     @NotNull
-    private Integer corrrectAnswer;
+    private Integer correctAnswer;
 
     
     @NotNull
-    private Integer playedAt;
+    private Instant playedAt;
     
 
     /* Relations */
@@ -41,6 +43,6 @@ public class QuizResult {
     private Category category;
 
 
-    /* Getter e setter  e toStign generati automaticamente da Lombok  con l'annotation @Data*/
+    /* Getter e setter  e toString generati automaticamente da Lombok  con l'annotation @Data*/
 
 }
