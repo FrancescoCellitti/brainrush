@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/quiz-results")
-public class QuizResultController {
+public class QuizResultRestController {
     @Autowired
     private  QuizResultService resultService;
 

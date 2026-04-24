@@ -79,7 +79,7 @@ public class CategoryController {
     public String toDelete(@PathVariable("id") Integer id, Model model){
         Category category = catService.getById(id);
         model.addAttribute("category", category);
-        return "category/delete";
+        return "redirect:/category";
     }
 
     @PostMapping("/delete/{id}")

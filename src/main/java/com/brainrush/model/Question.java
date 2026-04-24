@@ -35,12 +35,12 @@ public class Question {
     
     @NotBlank
     @Size
-    private String OptionB;
+    private String optionB;
 
     
     @NotBlank
     @Size
-    private String OptionC;
+    private String optionC;
 
     
     @NotBlank

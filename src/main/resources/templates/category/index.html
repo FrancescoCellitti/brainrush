@@ -124,7 +124,12 @@
                 <div class="actions">
                     <a class="link link-show" th:href="@{/category/{id}(id=${cat.id})}">Dettaglio</a>
                     <a class="link link-edit" th:href="@{/category/update/{id}(id=${cat.id})}">Modifica</a>
-                    <a class="link link-delete" th:href="@{/category/delete/{id}(id=${cat.id})}">Elimina</a>
+                    <form th:action="@{/category/delete/{id}(id=${cat.id})}" method="post" style="display:inline">
+                        <button type="submit" class="link link-delete"
+                                style="background:none;border:none;cursor:pointer;padding:0;font-size:inherit;font-family:inherit">
+                            Elimina
+                        </button>
+                    </form>
                 </div>
             </td>
         </tr>

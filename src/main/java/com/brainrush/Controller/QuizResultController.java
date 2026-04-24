@@ -28,7 +28,7 @@ public class QuizResultController {
     public String read(Model model){
         List<QuizResult> results = resultService.findAll();
         model.addAttribute("results", results);
-        return "quizResult/index";
+        return "QuizResult/index";
     }
 
     @GetMapping("/add")
@@ -45,7 +45,7 @@ public class QuizResultController {
             return "redirect:/add";
         }
         resultService.create(formResult);
-        return "redirect:/quiz%20result";
+        return "redirect:/quiz%20Result";
     }
 
     @GetMapping("/update/{id}")
