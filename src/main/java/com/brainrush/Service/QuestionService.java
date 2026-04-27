@@ -25,6 +25,10 @@ public class QuestionService {
         .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "domanda non trovata"));
     }
 
+    public List<Question> findByCategoryId(Integer categoryId) {
+    return questionRepo.findByCategory_id(categoryId);
+}
+
     public List<Question> getAllById(List<Integer> id){
         if(id == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "domanada non valida");
