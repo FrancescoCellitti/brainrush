@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifica Domanda</title>
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --primary: #0f766e;
+            --danger: #b91c1c;
+            --border: #d1d5db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 24px;
+        }
+
+        h1 { margin-bottom: 20px; }
+
+        .field { margin-bottom: 16px; }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .error {
+            margin-top: 6px;
+            color: var(--danger);
+            font-size: 14px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .btn-primary  { background: var(--primary); color: #fff; }
+        .btn-secondary { background: #e5e7eb; color: var(--text); }
+    </style>
+</head>
+<body>
+<nav th:replace="~{fragments/Navabar :: navbar}"></nav>
+<div class="container">
+    <h1>Modifica Domanda</h1>
+
+    <form th:action="@{/question/update/{id}(id=${question.id})}" th:object="${question}" method="post">
+
+        <div class="field">
+            <label for="title">Titolo</label>
+            <input id="title" type="text" th:field="*{title}">
+            <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+        </div>
+
+        <div class="options-grid">
+            <div class="field">
+                <label for="optionA">Opzione A</label>
+                <input id="optionA" type="text" th:field="*{optionA}">
+                <p class="error" th:if="${#fields.hasErrors('optionA')}" th:errors="*{optionA}"></p>
+            </div>
+            <div class="field">
+                <label for="optionB">Opzione B</label>
+                <input id="optionB" type="text" th:field="*{optionB}">
+                <p class="error" th:if="${#fields.hasErrors('optionB')}" th:errors="*{optionB}"></p>
+            </div>
+            <div class="field">
+                <label for="optionC">Opzione C</label>
+                <input id="optionC" type="text" th:field="*{optionC}">
+                <p class="error" th:if="${#fields.hasErrors('optionC')}" th:errors="*{optionC}"></p>
+            </div>
+            <div class="field">
+                <label for="optionD">Opzione D</label>
+                <input id="optionD" type="text" th:field="*{optionD}">
+                <p class="error" th:if="${#fields.hasErrors('optionD')}" th:errors="*{optionD}"></p>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="solution">Soluzione corretta</label>
+            <select id="solution" th:field="*{solution}">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+            <p class="error" th:if="${#fields.hasErrors('solution')}" th:errors="*{solution}"></p>
+        </div>
+
+        <div class="field">
+            <label for="difficulty">Difficoltà</label>
+            <select id="difficulty" th:field="*{difficulty}">
+                <option value="facile">Facile</option>
+                <option value="medio">Medio</option>
+                <option value="difficile">Difficile</option>
+            </select>
+            <p class="error" th:if="${#fields.hasErrors('difficulty')}" th:errors="*{difficulty}"></p>
+        </div>
+
+        <div class="field">
+            <label for="creation">Data creazione</label>
+            <input id="creation" type="text" th:field="*{creation}">
+            <p class="error" th:if="${#fields.hasErrors('creation')}" th:errors="*{creation}"></p>
+        </div>
+
+        <div class="field">
+            <label for="categoryId">Categoria</label>
+            <select id="categoryId" th:field="*{category.id}">
+                <option value="">-- Seleziona --</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.id}"
+                        th:text="${cat.name}">
+                </option>
+            </select>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" type="submit">Aggiorna</button>
+            <a class="btn btn-secondary" th:href="@{/question}">Annulla</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

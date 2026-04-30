@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aggiungi Categoria</title>
+    <title>Aggiungi Risultato Quiz</title>
     <style>
         :root {
             --bg: #f6f8fb;
@@ -36,13 +36,9 @@
             padding: 24px;
         }
 
-        h1 {
-            margin-bottom: 20px;
-        }
+        h1 { margin-bottom: 20px; }
 
-        .field {
-            margin-bottom: 16px;
-        }
+        .field { margin-bottom: 16px; }
 
         label {
             display: block;
@@ -50,7 +46,7 @@
             font-weight: 600;
         }
 
-        input, textarea {
+        input {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid var(--border);
@@ -58,9 +54,10 @@
             font-size: 15px;
         }
 
-        textarea {
-            min-height: 120px;
-            resize: vertical;
+        .hint {
+            margin-top: 4px;
+            font-size: 13px;
+            color: var(--muted);
         }
 
         .error {
@@ -86,38 +83,50 @@
             display: inline-block;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .btn-secondary {
-            background: #e5e7eb;
-            color: var(--text);
-        }
+        .btn-primary  { background: var(--primary); color: #fff; }
+        .btn-secondary { background: #e5e7eb; color: var(--text); }
     </style>
 </head>
 <body>
 <nav th:replace="~{fragments/Navabar :: navbar}"></nav>
 <div class="container">
-    <h1>Nuova Categoria</h1>
+    <h1>Nuovo Risultato Quiz</h1>
 
-    <form th:action="@{/category}" th:object="${category}" method="post">
+    <form th:action="@{/quizResult}" th:object="${result}" method="post">
+
         <div class="field">
-            <label for="name">Nome</label>
-            <input id="name" type="text" th:field="*{name}" placeholder="Es. Matematica">
-            <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            <label for="score">Punteggio</label>
+            <input id="score" type="number" th:field="*{score}" placeholder="Es. 80">
+            <p class="error" th:if="${#fields.hasErrors('score')}" th:errors="*{score}"></p>
         </div>
 
         <div class="field">
-            <label for="description">Descrizione</label>
-            <textarea id="description" th:field="*{description}" placeholder="Descrivi la categoria"></textarea>
-            <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+            <label for="totalQuestions">Totale domande</label>
+            <input id="totalQuestions" type="number" th:field="*{totalQuestions}" placeholder="Es. 10">
+            <p class="error" th:if="${#fields.hasErrors('totalQuestions')}" th:errors="*{totalQuestions}"></p>
+        </div>
+
+        <div class="field">
+            <label for="correctAnswer">Risposte corrette</label>
+            <input id="correctAnswer" type="number" th:field="*{correctAnswer}" placeholder="Es. 8">
+            <p class="error" th:if="${#fields.hasErrors('correctAnswer')}" th:errors="*{correctAnswer}"></p>
+        </div>
+
+        <div class="field">
+            <label for="playedAt">Data partita</label>
+            <input id="playedAt" type="text" th:field="*{playedAt}" placeholder="Es. 2024-01-15T10:30:00Z">
+            <p class="hint">Formato ISO 8601, es. 2024-01-15T10:30:00Z</p>
+            <p class="error" th:if="${#fields.hasErrors('playedAt')}" th:errors="*{playedAt}"></p>
+        </div>
+
+        <div class="field">
+            <label for="categoryId">ID Categoria</label>
+            <input id="categoryId" type="number" th:field="*{category.id}" placeholder="ID della categoria">
         </div>
 
         <div class="actions">
             <button class="btn btn-primary" type="submit">Salva</button>
-            <a class="btn btn-secondary" th:href="@{/category}">Annulla</a>
+            <a class="btn btn-secondary" th:href="@{/quizResult}">Annulla</a>
         </div>
     </form>
 </div>

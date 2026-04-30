@@ -18,7 +18,7 @@ import com.brainrush.model.QuizResult;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/quiz%20Result")
+@RequestMapping("/quizResult")
 public class QuizResultController {
     
       @Autowired
@@ -28,55 +28,62 @@ public class QuizResultController {
     public String read(Model model){
         List<QuizResult> results = resultService.findAll();
         model.addAttribute("results", results);
-        return "QuizResult/index";
+        return "quizResult/index";
     }
 
     @GetMapping("/add")
     public String add(Model model){
-        model. addAttribute("result", new QuizResult());
+        model.addAttribute("result", new QuizResult());
         return "quizResult/add";
     }
 
 
     @PostMapping
-    public String create(@Valid @ModelAttribute("quizResult") QuizResult formResult, BindingResult bindingResult, Model model){
+    public String create(@Valid @ModelAttribute("result") QuizResult formResult, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
             model.addAttribute("result", formResult);
-            return "redirect:/add";
+            return "quizResult/add";
         }
         resultService.create(formResult);
-        return "redirect:/quiz%20Result";
+        return "redirect:/quizResult";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Integer id, Model model){
+        QuizResult result = resultService.getById(id);
+        model.addAttribute("result", result);
+        return "quizResult/show";
     }
 
     @GetMapping("/update/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
      QuizResult result = resultService.getById(id);
      model.addAttribute("result", result);
-     return "QuizResult/update";    
+     return "quizResult/update";    
     }
 
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable("id") Integer id, @ModelAttribute("quizResult") QuizResult formResult, BindingResult bindingResult, Model model){
+    public String update(@PathVariable("id") Integer id, @ModelAttribute("result") QuizResult formResult, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("result", formResult);
-            return "QuizResult/update";
+            return "quizResult/update";
         }
         resultService.update(id, formResult);        
-        return "redirect:/quiz%20result";
+        return "redirect:/quizResult";
     }
 
 
-     @GetMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String toDelete(@PathVariable("id") Integer id, Model model){
         QuizResult result = resultService.getById(id);
         model.addAttribute("result", result);
-        return "QuizResult/delete";
+        return "quizResult/delete";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
         resultService.deleteById(id);
-        return "redirect:/quiz%20result";
+        return "redirect:/quizResult";
     }
 }

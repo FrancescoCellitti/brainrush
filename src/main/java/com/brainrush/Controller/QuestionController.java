@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.brainrush.Service.CategoryService;
 import com.brainrush.Service.QuestionService;
 import com.brainrush.model.Question;
 
@@ -25,6 +26,9 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping
     public String read(Model model){
         List<Question> questions = questionService.findAll();
@@ -34,7 +38,8 @@ public class QuestionController {
 
     @GetMapping("/add")
     public String add(Model model){
-        model. addAttribute("question", new Question());
+        model.addAttribute("question", new Question());
+        model.addAttribute("categories", categoryService.findAll());
         return "question/add";
     }
 
@@ -43,16 +48,25 @@ public class QuestionController {
     public String create(@Valid @ModelAttribute("question") Question formQuestion, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
             model.addAttribute("question", formQuestion);
-            return "redirect:/add";
+            model.addAttribute("categories", categoryService.findAll());
+            return "question/add";
         }
         questionService.create(formQuestion);
         return "redirect:/question";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Integer id, Model model){
+        Question question = questionService.getById(id);
+        model.addAttribute("question", question);
+        return "question/show";
     }
 
     @GetMapping("/update/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
      Question question = questionService.getById(id);
      model.addAttribute("question", question);
+     model.addAttribute("categories", categoryService.findAll());
      return "question/update";    
     }
 
@@ -61,6 +75,7 @@ public class QuestionController {
     public String update(@PathVariable("id") Integer id, @ModelAttribute("question") Question formQuestion, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("question", formQuestion);
+            model.addAttribute("categories", categoryService.findAll());
             return "question/update";
         }
         questionService.update(id, formQuestion);        

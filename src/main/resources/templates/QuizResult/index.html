@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elenco Categorie</title>
+    <title>Elenco Risultati Quiz</title>
     <style>
         :root {
             --bg: #f6f8fb;
@@ -26,11 +26,10 @@
         body {
             background: var(--bg);
             color: var(--text);
-            
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             background: var(--card);
             border-radius: 12px;
@@ -55,10 +54,7 @@
             display: inline-block;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-        }
+        .btn-primary { background: var(--primary); color: #fff; }
 
         table {
             width: 100%;
@@ -84,18 +80,16 @@
             flex-wrap: wrap;
         }
 
-        .link {
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .link-show { color: var(--primary); }
-        .link-edit { color: var(--warning); }
+        .link { font-weight: 600; text-decoration: none; }
+        .link-show   { color: var(--primary); }
+        .link-edit   { color: var(--warning); }
         .link-delete { color: var(--danger); }
 
-        .empty {
-            margin-top: 16px;
-            color: var(--muted);
+        .empty { margin-top: 16px; color: var(--muted); }
+
+        .score {
+            font-weight: 700;
+            color: var(--primary);
         }
     </style>
 </head>
@@ -103,27 +97,31 @@
 <nav th:replace="~{fragments/Navabar :: navbar}"></nav>
 <div class="container">
     <div class="header">
-        <h1>Categorie</h1>
-        <a class="btn btn-primary" th:href="@{/category/add}">+ Nuova categoria</a>
+        <h1>Risultati Quiz</h1>
+        <a class="btn btn-primary" th:href="@{/quizResult/add}">+ Nuovo risultato</a>
     </div>
 
-    <table th:if="${categoria != null and !#lists.isEmpty(categoria)}">
+    <table th:if="${results != null and !#lists.isEmpty(results)}">
         <thead>
         <tr>
-            <th>Nome</th>
-            <th>Descrizione</th>
+            <th>Categoria</th>
+            <th>Punteggio</th>
+            <th>Corrette / Totale</th>
+            <th>Data partita</th>
             <th>Azioni</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="cat : ${categoria}">
-            <td th:text="${cat.name}"></td>
-            <td th:text="${cat.description}"></td>
+        <tr th:each="r : ${results}">
+            <td th:text="${r.category != null ? r.category.name : '-'}"></td>
+            <td><span class="score" th:text="${r.score}"></span></td>
+            <td th:text="${r.correctAnswer} + ' / ' + ${r.totalQuestions}"></td>
+            <td th:text="${r.playedAt}"></td>
             <td>
                 <div class="actions">
-                    <a class="link link-show" th:href="@{/category/{id}(id=${cat.id})}">Dettaglio</a>
-                    <a class="link link-edit" th:href="@{/category/update/{id}(id=${cat.id})}">Modifica</a>
-                    <form th:action="@{/category/delete/{id}(id=${cat.id})}" method="post" style="display:inline">
+                    <a class="link link-show" th:href="@{/quizResult/{id}(id=${r.id})}">Dettaglio</a>
+                    <a class="link link-edit" th:href="@{/quizResult/update/{id}(id=${r.id})}">Modifica</a>
+                    <form th:action="@{/quizResult/delete/{id}(id=${r.id})}" method="post" style="display:inline">
                         <button type="submit" class="link link-delete"
                                 style="background:none;border:none;cursor:pointer;padding:0;font-size:inherit;font-family:inherit">
                             Elimina
@@ -135,7 +133,7 @@
         </tbody>
     </table>
 
-    <p class="empty" th:if="${categoria == null or #lists.isEmpty(categoria)}">Nessuna categoria presente.</p>
+    <p class="empty" th:if="${results == null or #lists.isEmpty(results)}">Nessun risultato presente.</p>
 </div>
 </body>
 </html>

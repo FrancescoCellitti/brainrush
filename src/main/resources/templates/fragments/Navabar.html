@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<nav th:fragment="navbar" class="navbar">
+    <style>
+        .navbar {
+            background: #0f766e;
+            padding: 0 24px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-links a {
+            color: #d1fae5;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: background 0.15s;
+        }
+
+        .navbar-links a:hover,
+        .navbar-links a.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+    </style>
+
+    <a class="navbar-brand" th:href="@{/}">BrainRush</a>
+
+    <ul class="navbar-links">
+        <li>
+            <a th:href="@{/category}">Categorie</a>
+        </li>
+        <li>
+            <a th:href="@{/question}">Domande</a>
+        </li>
+        <li>
+            <a th:href="@{/quizResult}">Risultati</a>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

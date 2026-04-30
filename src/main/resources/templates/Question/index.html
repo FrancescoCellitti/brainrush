@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elenco Categorie</title>
+    <title>Elenco Domande</title>
     <style>
         :root {
             --bg: #f6f8fb;
@@ -26,11 +26,11 @@
         body {
             background: var(--bg);
             color: var(--text);
-            
+
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: var(--card);
             border-radius: 12px;
@@ -97,33 +97,51 @@
             margin-top: 16px;
             color: var(--muted);
         }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-easy   { background: #d1fae5; color: #065f46; }
+        .badge-medium { background: #fef3c7; color: #92400e; }
+        .badge-hard   { background: #fee2e2; color: #991b1b; }
     </style>
 </head>
 <body>
 <nav th:replace="~{fragments/Navabar :: navbar}"></nav>
 <div class="container">
     <div class="header">
-        <h1>Categorie</h1>
-        <a class="btn btn-primary" th:href="@{/category/add}">+ Nuova categoria</a>
+        <h1>Domande</h1>
+        <a class="btn btn-primary" th:href="@{/question/add}">+ Nuova domanda</a>
     </div>
 
-    <table th:if="${categoria != null and !#lists.isEmpty(categoria)}">
+    <table th:if="${question != null and !#lists.isEmpty(question)}">
         <thead>
         <tr>
-            <th>Nome</th>
-            <th>Descrizione</th>
+            <th>Titolo</th>
+            <th>Categoria</th>
+            <th>Difficoltà</th>
+            <th>Data creazione</th>
             <th>Azioni</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="cat : ${categoria}">
-            <td th:text="${cat.name}"></td>
-            <td th:text="${cat.description}"></td>
+        <tr th:each="q : ${question}">
+            <td th:text="${q.title}"></td>
+            <td th:text="${q.category != null ? q.category.name : '-'}"></td>
+            <td><span class="badge"
+                      th:classappend="${q.difficulty == 'facile'} ? 'badge-easy' : (${q.difficulty == 'medio'} ? 'badge-medium' : 'badge-hard')"
+                      th:text="${q.difficulty}"></span></td>
+            <td th:text="${q.creation}"></td>
             <td>
                 <div class="actions">
-                    <a class="link link-show" th:href="@{/category/{id}(id=${cat.id})}">Dettaglio</a>
-                    <a class="link link-edit" th:href="@{/category/update/{id}(id=${cat.id})}">Modifica</a>
-                    <form th:action="@{/category/delete/{id}(id=${cat.id})}" method="post" style="display:inline">
+                    <a class="link link-show" th:href="@{/question/{id}(id=${q.id})}">Dettaglio</a>
+                    <a class="link link-edit" th:href="@{/question/update/{id}(id=${q.id})}">Modifica</a>
+                    <form th:action="@{/question/delete/{id}(id=${q.id})}" method="post" style="display:inline">
                         <button type="submit" class="link link-delete"
                                 style="background:none;border:none;cursor:pointer;padding:0;font-size:inherit;font-family:inherit">
                             Elimina
@@ -135,7 +153,7 @@
         </tbody>
     </table>
 
-    <p class="empty" th:if="${categoria == null or #lists.isEmpty(categoria)}">Nessuna categoria presente.</p>
+    <p class="empty" th:if="${question == null or #lists.isEmpty(question)}">Nessuna domanda presente.</p>
 </div>
 </body>
 </html>

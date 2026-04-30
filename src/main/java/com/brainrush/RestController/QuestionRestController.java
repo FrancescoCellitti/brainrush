@@ -2,13 +2,11 @@ package com.brainrush.RestController;
 
 import java.util.List;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brainrush.DTO.QuestionDto;
@@ -37,12 +35,7 @@ public class QuestionRestController {
         return ResponseEntity.ok(toDto(Qserv.getById(id)));
     }
 
-    @GetMapping
-    public ResponseEntity<List<QuestionDto>> index (@RequestParam(required = false) Integer catId){
-        List<Question> questions = (catId != null) ? Qserv.findByCategoryId(catId) : Qserv.findAll();
 
-        return ResponseEntity.ok(questions.stream().map(this::toDto).toList()); 
-    }
 
     private QuestionDto toDto(Question q) {
         QuestionDto dto = new QuestionDto();
