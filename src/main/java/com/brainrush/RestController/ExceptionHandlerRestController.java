@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -99,7 +100,7 @@ public class ExceptionHandlerRestController {
         return body;
     }
 
-    private ModelAndView buildMav(String viewName, HttpStatus status, String message) {
+    private ModelAndView buildMav(@NonNull String viewName, HttpStatus status, String message) {
         ModelAndView mav = new ModelAndView(viewName);
         mav.setStatus(status);
         mav.addObject("status", status.value());
