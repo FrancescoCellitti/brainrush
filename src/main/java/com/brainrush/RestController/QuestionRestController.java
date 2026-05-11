@@ -37,6 +37,12 @@ public class QuestionRestController {
         return ResponseEntity.ok(toDto(Qserv.getById(id)));
     }
 
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<QuestionDto>> byCategory(@PathVariable Integer categoryId){
+        List<QuestionDto> dtos = Qserv.findByCategoryId(categoryId).stream().map(this::toDto).toList();
+        return ResponseEntity.ok(dtos);
+    }
+
 
 
     private QuestionDto toDto(Question q) {
