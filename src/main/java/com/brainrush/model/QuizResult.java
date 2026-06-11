@@ -42,6 +42,10 @@ public class QuizResult {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User users;
+
 
     /* Getter e setter  e toString generati automaticamente da Lombok  con l'annotation @Data*/
 
