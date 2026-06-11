@@ -52,4 +52,8 @@ public class QuizResultService {
         }
         resultRepo.delete(result);
     }
+
+    public List<QuizResult> findByUserId(Integer userid){
+        return resultRepo.findByUsersId(userid);
+    }
 }
